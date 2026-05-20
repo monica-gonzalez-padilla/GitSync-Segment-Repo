@@ -18,7 +18,7 @@ resource "segment_destination" "id-6a0de1bb17dd02a0209ad7c0" {
   name = "HTTP API - Marketo"
   settings = jsonencode({
     accountId         = "667-MPQ-382"
-    anonymousActivity = false
+    anonymousActivity = true
     beta              = false
     clientId          = ""
     clientSecret      = ""
