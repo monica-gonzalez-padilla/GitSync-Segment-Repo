@@ -10,22 +10,33 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
     {
       json_schema = jsonencode({
         "$schema"   = "http://json-schema.org/draft-07/schema#"
-        description = "Blocks events where context.page.search contains randomized bot or scanner keys."
+        description = "Blocks events from specific bots/IPs and strictly whitelists allowed context.page.search keys to prevent Snowflake column explosions."
         not = {
           anyOf = [{
             properties = {
               context = {
                 properties = {
+                  userAgent = {
+                    pattern = "[gG][oO][oO][gG][lL][eE][bB][oO][tT]|[bB][iI][nN][gG][bB][oO][tT]|[bB][aA][iI][dD][uU]|[yY][aA][nN][dD][eE][xX]|[yY][iI][sS][oO][uU][sS][pP][iI][dD][eE][rR]|[dD][uU][cC][kK][dD][uU][cC][kK][bB][oO][tT]|[sS][lL][uU][rR][pP]|[sS][eE][mM][rR][uU][sS][hH]|[aA][hH][rR][eE][fF][sS]|[mM][jJ]12[bB][oO][tT]|[sS][cC][rR][eE][aA][mM][iI][nN][gG][\\s_-]?[fF][rR][oO][gG]|[cC][rR][aA][wW][lL][eE][rR]|[bB][oO][tT]|[sS][pP][iI][dD][eE][rR]|[pP][iI][nN][gG][dD][oO][mM]"
+                    type    = "string"
+                  }
+                }
+                required = ["userAgent"]
+                type     = "object"
+              }
+            }
+            }, {
+            properties = {
+              context = {
+                properties = {
                   page = {
                     properties = {
-                      search = {
-                        patternProperties = {
-                          "^[a-zA-Z0-9]{15,40}$|^[a-fA-F0-9]{4,12}_[pP][aA][gG][eE]$" = {}
-                        }
-                        type = "object"
+                      url = {
+                        pattern = "[gG][oO][oO][gG][lL][eE][bB][oO][tT]|[bB][iI][nN][gG][bB][oO][tT]|[bB][aA][iI][dD][uU]|[yY][aA][nN][dD][eE][xX]|[yY][iI][sS][oO][uU][sS][pP][iI][dD][eE][rR]|[dD][uU][cC][kK][dD][uU][cC][kK][bB][oO][tT]|[sS][lL][uU][rR][pP]|[sS][eE][mM][rR][uU][sS][hH]|[aA][hH][rR][eE][fF][sS]|[mM][jJ]12[bB][oO][tT]|[sS][cC][rR][eE][aA][mM][iI][nN][gG][\\s_-]?[fF][rR][oO][gG]|[cC][rR][aA][wW][lL][eE][rR]|[bB][oO][tT]|[sS][pP][iI][dD][eE][rR]|[pP][iI][nN][gG][dD][oO][mM]"
+                        type    = "string"
                       }
                     }
-                    required = ["search"]
+                    required = ["url"]
                     type     = "object"
                   }
                 }
@@ -33,10 +44,79 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
                 type     = "object"
               }
             }
+            }, {
+            properties = {
+              context = {
+                properties = {
+                  referrer = {
+                    properties = {
+                      url = {
+                        pattern = "[gG][oO][oO][gG][lL][eE][bB][oO][tT]|[bB][iI][nN][gG][bB][oO][tT]|[bB][aA][iI][dD][uU]|[yY][aA][nN][dD][eE][xX]|[yY][iI][sS][oO][uU][sS][pP][iI][dD][eE][rR]|[dD][uU][cC][kK][dD][uU][cC][kK][bB][oO][tT]|[sS][lL][uU][rR][pP]|[sS][eE][mM][rR][uU][sS][hH]|[aA][hH][rR][eE][fF][sS]|[mM][jJ]12[bB][oO][tT]|[sS][cC][rR][eE][aA][mM][iI][nN][gG][\\s_-]?[fF][rR][oO][gG]|[cC][rR][aA][wW][lL][eE][rR]|[bB][oO][tT]|[sS][pP][iI][dD][eE][rR]|[pP][iI][nN][gG][dD][oO][mM]"
+                        type    = "string"
+                      }
+                    }
+                    required = ["url"]
+                    type     = "object"
+                  }
+                }
+                required = ["referrer"]
+                type     = "object"
+              }
+            }
+            }, {
+            properties = {
+              context = {
+                properties = {
+                  ip = {
+                    pattern = "(146\\.75\\.154\\.0|146\\.75\\.154\\.1|52\\.73\\.209\\.122|146\\.75\\.136\\.0|146\\.75\\.136\\.1|23\\.22\\.2\\.46|146\\.75\\.146\\.0|50\\.16\\.153\\.186|146\\.75\\.146\\.1|52\\.66\\.182\\.147)"
+                    type    = "string"
+                  }
+                }
+                required = ["ip"]
+                type     = "object"
+              }
+            }
           }]
         }
         properties = {
           context = {
+            properties = {
+              page = {
+                properties = {
+                  search = {
+                    additionalProperties = false
+                    properties = {
+                      fbclid = {
+                        type = "string"
+                      }
+                      gclid = {
+                        type = "string"
+                      }
+                      q = {
+                        type = "string"
+                      }
+                      utm_campaign = {
+                        type = "string"
+                      }
+                      utm_content = {
+                        type = "string"
+                      }
+                      utm_medium = {
+                        type = "string"
+                      }
+                      utm_source = {
+                        type = "string"
+                      }
+                      utm_term = {
+                        type = "string"
+                      }
+                    }
+                    type = "object"
+                  }
+                }
+                type = "object"
+              }
+            }
             type = "object"
           }
           properties = {}
