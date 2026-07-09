@@ -10,7 +10,7 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
     {
       json_schema = jsonencode({
         "$schema"   = "http://json-schema.org/draft-07/schema#"
-        description = "Blocks events from specific bots/IPs and strictly whitelists allowed context.page.search keys to prevent Snowflake column explosions."
+        description = "Blocks events from specific bots across userAgent, page URLs, and referrers, and strictly whitelists allowed context.page.search marketing parameters to prevent Snowflake column explosions."
         not = {
           anyOf = [{
             properties = {
@@ -63,19 +63,6 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
                 type     = "object"
               }
             }
-            }, {
-            properties = {
-              context = {
-                properties = {
-                  ip = {
-                    pattern = "(146\\.75\\.154\\.0|146\\.75\\.154\\.1|52\\.73\\.209\\.122|146\\.75\\.136\\.0|146\\.75\\.136\\.1|23\\.22\\.2\\.46|146\\.75\\.146\\.0|50\\.16\\.153\\.186|146\\.75\\.146\\.1|52\\.66\\.182\\.147)"
-                    type    = "string"
-                  }
-                }
-                required = ["ip"]
-                type     = "object"
-              }
-            }
           }]
         }
         properties = {
@@ -85,7 +72,26 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
                 properties = {
                   search = {
                     additionalProperties = false
+                    description          = "Strict allowlist of authorized marketing, search, and Facebook campaign parameters."
                     properties = {
+                      fb_ad = {
+                        type = "string"
+                      }
+                      fb_adid = {
+                        type = "string"
+                      }
+                      fb_adset = {
+                        type = "string"
+                      }
+                      fb_adsetid = {
+                        type = "string"
+                      }
+                      fb_campaign = {
+                        type = "string"
+                      }
+                      fb_campaignid = {
+                        type = "string"
+                      }
                       fbclid = {
                         type = "string"
                       }
@@ -99,6 +105,9 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
                         type = "string"
                       }
                       utm_content = {
+                        type = "string"
+                      }
+                      utm_id = {
                         type = "string"
                       }
                       utm_medium = {
