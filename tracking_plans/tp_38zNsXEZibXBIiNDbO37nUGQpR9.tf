@@ -43,6 +43,8 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
                     "$" = {
                       description = ""
                       id          = "/properties/properties/properties/items/items/properties/%24"
+                      properties  = {}
+                      required    = []
                       type        = "object"
                     }
                     index = {
@@ -103,6 +105,24 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
         type = "object"
       })
       key     = "Insert event name"
+      type    = "TRACK"
+      version = 1
+    },
+    {
+      json_schema = jsonencode({
+        "$schema" = "http://json-schema.org/draft-07/schema#"
+        properties = {
+          context = {}
+          properties = {
+            type = "object"
+          }
+          traits = {
+            type = "object"
+          }
+        }
+        type = "object"
+      })
+      key     = "Page Viewed"
       type    = "TRACK"
       version = 1
     },
