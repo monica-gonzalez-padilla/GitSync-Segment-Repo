@@ -10,6 +10,48 @@ resource "segment_tracking_plan" "id-tp_38zNsXEZibXBIiNDbO37nUGQpR9" {
     {
       json_schema = jsonencode({
         "$schema"   = "http://json-schema.org/draft-07/schema#"
+        description = "Blocks events where context.page.search contains randomized bot or scanner keys."
+        not = {
+          anyOf = [{
+            properties = {
+              context = {
+                properties = {
+                  page = {
+                    properties = {
+                      search = {
+                        patternProperties = {
+                          "^[a-zA-Z0-9]{15,40}$|^[a-fA-F0-9]{4,12}_[pP][aA][gG][eE]$" = {}
+                        }
+                        type = "object"
+                      }
+                    }
+                    required = ["search"]
+                    type     = "object"
+                  }
+                }
+                required = ["page"]
+                type     = "object"
+              }
+            }
+          }]
+        }
+        properties = {
+          context = {
+            type = "object"
+          }
+          properties = {}
+          traits     = {}
+        }
+        required = ["context"]
+        type     = "object"
+      })
+      key     = null
+      type    = "COMMON"
+      version = 1
+    },
+    {
+      json_schema = jsonencode({
+        "$schema"   = "http://json-schema.org/draft-07/schema#"
         description = "DO NOT EDIT. Event generated to store end users consent preferences for Unify and Twilio Engage."
         properties = {
           context = {
