@@ -27,5 +27,5 @@ resource "segment_destination_subscription" "id-69e00857b0bd4d06d922de38_d2u25Hf
       "@path" = "$.userId"
     }
   })
-  trigger = "type = \"identify\" and context.account_updated = false"
+  trigger = "type = \"identify\""
 }
