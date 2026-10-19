@@ -15,7 +15,7 @@ resource "segment_destination_filter" "id-6566532899cdcf42a7f1ecbd_3KvTdcW4l7yga
   description    = null
   destination_id = "6566532899cdcf42a7f1ecbd"
   enabled        = false
-  if             = "!(type = \"identify\" and traits.frieze_marketing_optin = \"true\")"
+  if             = "!(type = \"identify\" and traits.frieze_marketing_optin = \"true\" and traits.retailer_name = \"Frieze\")"
   source_id      = "rCnqDERQ6y6DxDSaEAok9L"
   title          = "Only send opted in users"
 }
