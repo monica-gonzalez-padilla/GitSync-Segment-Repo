@@ -11,6 +11,11 @@ resource "segment_destination_subscription" "id-6adf74ca0d5769c32d3359a5_bUxkXYr
   name                 = "Update Multiple Customer Profiles’ Attributes"
   reverse_etl_schedule = null
   settings = jsonencode({
+    attributesInfo = {
+      "@arrayPath" = [{
+        "@path" = "$.properties.profiles_list"
+      }, {}]
+    }
     data = {
       "@arrayPath" = [{
         "@path" = "$.properties.profiles_list"
