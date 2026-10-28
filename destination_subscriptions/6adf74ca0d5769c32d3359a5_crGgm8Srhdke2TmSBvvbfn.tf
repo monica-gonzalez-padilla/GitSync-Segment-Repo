@@ -19,5 +19,5 @@ resource "segment_destination_subscription" "id-6adf74ca0d5769c32d3359a5_crGgm8S
     }
     runRuleEngine = true
   })
-  trigger = "event = \"\""
+  trigger = "type = \"identify\""
 }
